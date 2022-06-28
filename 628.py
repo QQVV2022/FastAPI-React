@@ -13,4 +13,8 @@ print('This is a code from Ken')
 # Try again by Ken
 =======
 
+<<<<<<< HEAD
 >>>>>>> 2c620edf201b143d7600aa976c469ab077630255
+=======
+>>>>>>> 0502a054ac72afb2c98f2b7a6264cda92d2200db
+>>>>>>> 4dcf40cc649d9f2ab1c89c122dc1bced1fb4a8db
