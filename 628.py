@@ -2,7 +2,7 @@ print("hello")
 print("Today is Tuesday!")
 print('This is a code from Ken')
 # Trang: type whatever you want on Line 3
-11234abcd5678
+11234abcd567890
 ##1234abcd
 # Ken: type whatever you want on Line 5
 
