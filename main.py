@@ -2,7 +2,6 @@ from fastapi import FastAPI, Request
 from  redis_om import get_redis_connection, HashModel
 import redis
 import json
-
 import consumer
 
 app = FastAPI()
@@ -43,7 +42,20 @@ async def get_state(pk: str):
     if state is not None:
         return json.loads(state)
     else:
-        return '{}'
+        state = build_state(pk)
+        rd.set(f'delivery:{pk}', json.dumps(state))
+        return state
+
+def build_state(pk: str):
+    pks = Event.all_pks()
+    all_events = [Event.get(pk) for pk in pks]
+    events = [event for event in all_events if event.delivery_id == pk]
+
+    state = {}
+    for event in events:
+        state = consumer.CUSUMER[event.type](state, event)
+
+    return state
 
 @app.post("/deliveries/create")
 async def create(request: Request):
@@ -60,7 +72,6 @@ async def dispatch(request: Request):
     delivery_id = body['delivery_id']
     event = Event(delivery_id=delivery_id, type=body['type'], data=json.dumps(body['data'])).save()
     state = await get_state(delivery_id)
-    print("$$", state)
     new_state = consumer.CUSUMER[body['type']](state, event)
     rd.set(f'delivery:{delivery_id}', json.dumps(new_state))
     return new_state

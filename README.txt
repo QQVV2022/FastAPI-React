@@ -1,3 +1,6 @@
+
+
+----------- dev process --------
 1. Set up virtual env:
 $pip install virtualenv
 
@@ -17,3 +20,7 @@ $pip install -r requirements.txt
 
 3. Run the app:
 $uvicorn main:app --reload
+
+4. create react app
+$npx create-react-app react-events
+$ npm i bootstrap
